@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>All Orders</h2>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Order ID</th>
+            <th>Item Name</th>
+            <th>Item Composition</th>
+            <th>Item Price</th>
+            <th>Quantity</th>
+        </tr>
+        {{range .Orders}}
+        <tr>
+                <td>{{.Username}}</td>
+                <td>{{ .ID }}</td>
+                <td>{{ .Basket.Item.Name }}</td>
+                <td>{{ .Basket.Item.Composition }}</td>
+                <td>${{ .Basket.Item.Price }}</td>
+                <td>{{ .Basket.Quantity }}</td>
+            </tr>
+        {{end}}
+    </table>
+</body>
+</html>

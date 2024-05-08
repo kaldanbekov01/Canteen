@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
+<title>Main page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0px;
+        padding: 0px;
+    }
+    header {
+        background-color: #ffffff;
+        padding: 20px 0;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav a {
+        margin-right: 15px;
+        color: #333;
+    }
+    .fixed-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030; 
+    }
+    .body-content {
+        padding-top: 100px; 
+    }
+    .welcome{
+        font-family: "Gill Sans", sans-serif;
+    }
+    .card-group{
+        width: 250px; 
+        height: 400px;
+    }
+    .name{
+        font-family: Georgia, serif;
+    }
+</style>
+</head>
+<body>
+<header class="fixed-top">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+          <span class="welcome fs-4">SDU Canteen</span>
+        </a>
+
+        <nav class="d-inline-flex mt-2 mt-md-0">
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Main</a>
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#Bakings">Bakings</a>
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#Cakes">Cakes</a>
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#Drinks">Drinks</a>
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#Tea">Tea</a>
+          <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#Coffee">Coffee</a>
+          <a class="py-2 link-body-emphasis text-decoration-none" href="/addToBasket">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart4" viewBox="">
+              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+            </svg>
+            Basket
+        </a>
+        </nav>
+        <h5 class="welcome">Total: <span id="total">0.00 tg</span></h5>
+        <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Logged in as: {{.Username}}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/login">LOGOUT-></a></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+</header>
+<div class="container body-content">
+    <div class="container pricing-header p-5 pb-md-5 mx-auto text-center">
+      <h1 class="welcome display-5 fw-normal text-body-emphasis">Welcome to the SDU Canteen!</h1>
+      <p class="welcome fs-5 text-body-secondary"> – where delicious flavors meet academic appetites. Explore a culinary journey tailored to the vibrant spirit of the SDU community, offering a delectable fusion of taste and convenience.</p>
+    </div>
+    <main>
+        {{ range .Categories }}
+        <section id="{{ .Name }}">
+        <h1 class="m-3 name">{{ .Name }}</h1>
+        </section>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {{ range .Items }}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ .Image }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ .Name }}</h5>
+                        <p class="card-text">Composition: {{ .Composition }}</p>
+                        <p class="card-text">Price: {{ .Price }} tg</p>
+                        <div class="input-group w-50">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decrementCount('{{ .ID }}')">-</button>
+                            <input type="text" class="form-control" id="{{ .ID }}" value="0" readonly>
+                            <button class="btn btn-outline-secondary" type="button" onclick="incrementCount('{{ .ID }}','{{ .Count }}')">+</button>
+                            <a class="btn btn-primary m-4" onclick="addToBasket('{{ .ID }}', '{{ .Price }}')">Add to Basket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        {{ end }}
+    </main>
+    
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19">
+            <small class="d-block mb-3 text-body-secondary">© 2017–2024</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+     function addToBasket(itemID, price) {
+        var input = document.getElementById(itemID);
+        var value = parseInt(input.value);
+        fetch("/addToBasket", {
+            method: "POST",
+            body: new URLSearchParams({
+                "itemID": itemID,
+                "value": value
+            }),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to update item count");
+            }
+            if (value > 0) {
+                input.value = 0;
+            }
+            updateTotal(parseFloat(price),parseFloat(value));
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+    function incrementCount(id, maxCount) {
+        var input = document.getElementById(id);
+        var value = parseInt(input.value);
+        if (value < maxCount) {
+            input.value = value + 1;
+        } else {
+            alert("Maximum count reached!");
+        }
+    }
+
+    function decrementCount(id) {
+        var input = document.getElementById(id);
+        var value = parseInt(input.value);
+        if (value > 0) {
+            input.value = value - 1;
+        }
+    }
+    function updateTotal(price,value) {
+        var totalElement = document.getElementById('total');
+        var currentTotal = parseFloat(totalElement.innerText);
+        var newTotal = currentTotal + price*value;
+        totalElement.innerText = newTotal.toFixed(2) + ' tg';
+    }
+</script>
+</body>
+</html>

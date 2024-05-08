@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url('https://www.studyinternational.com/wp-content/uploads/2021/09/SDU-sonderborg-45-2.jpg'); /* Add your background image URL here */
+        background-size: cover; /* Cover the entire container */
+        background-position: center; /* Center the background image */
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: 200px;
+        text-align: center; /* Center align content */
+    }
+
+    h3 {
+        color: rgb(39, 39, 130);
+        margin-bottom: 30px;
+        font-family: Georgia, serif;
+    }
+
+    img {
+        max-width: 100%;
+        height: 200px; /* Adjust image height */
+        display: block; /* Ensure image is centered */
+        margin: 0 auto; /* Center image horizontally */
+        margin-bottom: 30px; /* Add some space below the image */
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #dcdcdc;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        padding: 15px;
+        background-color: #072341;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<div class="form-container">
+    <h3>WELCOME TO SDU CANTEEN!</h3>
+    <img src="https://sdu.edu.kz/wp-content/uploads/2023/08/logo-1024x1016.png">
+    <form action="/" method="POST">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

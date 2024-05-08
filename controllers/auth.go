@@ -57,7 +57,7 @@ func Login(c *gin.Context) {
 	}
 
 	c.SetCookie("token", tokenString, int(expirationTime.Unix()), "/", "localhost", false, true)
-	c.JSON(200, gin.H{"success": "user logged in"})
+	c.JSON(200, gin.H{"success": user.Email +  " user logged in"})
 }
 
 func Signup(c *gin.Context) {
@@ -85,12 +85,14 @@ func Signup(c *gin.Context) {
 		return
 	}
 
+
 	models.DB.Create(&user)
 
 	c.JSON(200, gin.H{"success": "user created"})
 }
 
 func Home(c *gin.Context) {
+	var user models.User
 
 	cookie, err := c.Cookie("token")
 
@@ -111,7 +113,13 @@ func Home(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"success": "home page", "role": claims.Role})
+	result := models.DB.Where("email = ?", claims.Subject).First(&user)
+	if result.Error != nil {
+		c.JSON(401, gin.H{"error": "user not found"})
+		return
+	}
+
+	c.JSON(200, gin.H{"success": "home page", "role": claims.Role, "name": user.Name})
 }
 
 func Premium(c *gin.Context) {
@@ -143,7 +151,6 @@ func Logout(c *gin.Context) {
 	c.JSON(200, gin.H{"success": "user logged out"})
 }
 
-// ADDITIONAL FUNCTIONALITIES
 
 func ResetPassword(c *gin.Context) {
 
@@ -175,5 +182,3 @@ func ResetPassword(c *gin.Context) {
 
 	c.JSON(200, gin.H{"success": "password updated"})
 }
-
-
